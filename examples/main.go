@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/jwambugu/mpesa-golang-sdk"
+	"github.com/salticon/mpesa-golang-sdk"
 	"log"
 	"net/http"
 	"time"
