@@ -1,4 +1,4 @@
-module github.com/jwambugu/mpesa-golang-sdk
+module github.com/salticon/mpesa-golang-sdk
 
 go 1.21
 

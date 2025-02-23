@@ -25,7 +25,7 @@ To use the APIs, follow these steps:
 ## Installation
 
 ```bash 
-  go get github.com/jwambugu/mpesa-golang-sdk
+  go get github.com/salticon/mpesa-golang-sdk
 ```
 
 ## Usage/Examples
