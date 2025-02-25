@@ -75,14 +75,20 @@ var certFS embed.FS
 
 // Mpesa is an app to make a transaction
 type Mpesa struct {
-	client      HttpClient
-	environment Environment
-	mu          sync.Mutex
-	cache       cache
-
+	client         HttpClient
+	environment    Environment
+	mu             sync.Mutex
+	cache          cache
+	Version        Version // should be v1 or v2
 	consumerKey    string
 	consumerSecret string
 }
+type Version string
+
+const (
+	V1 Version = "v1"
+	V2 Version = "v2"
+)
 
 var (
 	// ErrInvalidPasskey indicates that no passkey was provided.
@@ -115,10 +121,9 @@ func NewApp(c HttpClient, consumerKey, consumerSecret string, env Environment) *
 	}
 
 	return &Mpesa{
-		client:      c,
-		environment: env,
-		cache:       make(cache),
-
+		client:         c,
+		environment:    env,
+		cache:          make(cache),
 		consumerKey:    consumerKey,
 		consumerSecret: consumerSecret,
 	}
@@ -146,7 +151,7 @@ func (m *Mpesa) endpointBusinessPayBill() string {
 
 // endpointB2C returns the endpoint to register C2B callbacks prefixed with the current Environment base URL
 func (m *Mpesa) endpointC2BRegister() string {
-	return m.Environment().BaseURL() + `/mpesa/c2b/v1/registerurl`
+	return m.Environment().BaseURL() + fmt.Sprintf("/mpesa/c2b/%s/registerurl", m.Version)
 }
 
 // endpointB2C returns the endpoint to generate dunamic QR code prefixed with the current Environment base URL
